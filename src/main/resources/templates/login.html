@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <title>ログイン</title>
+</head>
+<body>
+<div class="container">
+    <div class="logo-group">
+        <div class="logo">
+            <img alt="会社ロゴ" th:src="@{/image/logo.jpg}">
+        </div>
+        <div class="title">
+            <h3>Java教育システム</h3>
+        </div>
+    </div>
+    <div class="login-form">
+        <form method="post" th:action="@{/login}">
+            <table class="table table-bordered col-md-6">
+                <tr class="form-group">
+                    <th class="align-middle">名前</th>
+                    <td><input class="form-controll" name="username" type="text"></td>
+                </tr>
+                <tr class="form-group">
+                    <th class="align-middle">パスワード</th>
+                    <td><input class="form-controll" name="password" type="text"></td>
+                </tr>
+            </table>
+            <!--/* ログインエラー時にメッセージを表示 */-->
+            <div class="alert alert-danger" th:if="${param.error}">
+                名前またはパスワードが正しくありません
+            </div>
+            <div class="submit">
+                <input class="btn btn-primary" type="submit" value="ログイン">
+            </div>
+        </form>
+    </div>
+</div>
+<script src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
+<script src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
