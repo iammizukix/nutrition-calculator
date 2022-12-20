@@ -17,7 +17,7 @@ public class UserRegistrationController {
 
     @GetMapping("/input")
     public String input() {
-        return "input";
+        return "registration/input";
     }
 
     @PostMapping("/submit")

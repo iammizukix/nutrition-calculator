@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/")
         ).authorizeHttpRequests(authz -> authz
                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers("/", "/hello", "/registration/input").permitAll()
+                .requestMatchers("/", "/registration/**").permitAll()
                 .requestMatchers("/general").hasRole("GENERAL")
                 .requestMatchers("/admin").hasRole("ADMIN")
                 .anyRequest().authenticated()
