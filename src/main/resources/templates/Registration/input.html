@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Registration</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<body>
+<h1>Registration</h1>
+<p sec:authorize="authenticated">Input your information</p>
+<form method="post" th:action="@{/registration/submit}">
+    User name: <input type="text" name="username"><br>
+    Password: <input type="password" name="password"><br>
+    Role :
+    <select name="role">
+        <option value="ADMIN" selected>ADMIN</option>
+        <option value="GENERAL">GENERAL</option>
+        <option value="USER">USER</option>
+    </select>
+    <button type="submit">Sign up</button>
+</form>
+</body>
+</html>
