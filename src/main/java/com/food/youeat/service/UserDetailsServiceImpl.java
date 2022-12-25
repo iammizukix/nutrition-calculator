@@ -24,15 +24,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            UserEntity user = userRepository.findByName(username);
-            String password = user.getPassword();
-            Collection<GrantedAuthority> authorities =
-                    List.of(new SimpleGrantedAuthority(user.getRole()));
-            return new UserDetailsImpl(username, password, authorities);
-        } catch (Exception ex) {
-            log.warn("user not found. username={}", username);
-            throw new UsernameNotFoundException("user not found. username = " + username);
-        }
+        UserEntity user = userRepository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("user name not found. username = " + username));
+        String password = user.getPassword();
+        Collection<GrantedAuthority> authorities =
+                List.of(new SimpleGrantedAuthority(user.getRole()));
+        return new UserDetailsImpl(username, password, authorities);
     }
 }

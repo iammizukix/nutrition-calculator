@@ -19,7 +19,7 @@ public class UserRegistrationService {
     @Transactional
     public void registerUser(String name, String password, String role) {
         UserEntity user = new UserEntity();
-        user.setName(name);
+
         user.setPassword(passwordEncoder.encode(password));
         user.setRole(role);
         user.setStatus(UserStatusEnum.ACTIVE);

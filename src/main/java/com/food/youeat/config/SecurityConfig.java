@@ -4,42 +4,41 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
+
+//    @Autowired
+//    UserDetailsServiceImpl userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.formLogin(login -> login
-                .loginProcessingUrl("/login")
-                .loginPage("/login")
-                .defaultSuccessUrl("/login")
-                .failureUrl("/login?error")
-                .permitAll()
-        ).logout(logout -> logout
-                .logoutSuccessUrl("/")
-        ).authorizeHttpRequests(authz -> authz
-                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .requestMatchers("/", "/registration/**").permitAll()
-                .requestMatchers("/general").hasRole("GENERAL")
-                .requestMatchers("/admin").hasRole("ADMIN")
-                .anyRequest().authenticated()
-        );
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                        .requestMatchers("/", "/registration/**").permitAll()
+                        .requestMatchers("/general").hasRole("GENERAL")
+                        .requestMatchers("/admin").hasRole("ADMIN")
+                        .anyRequest().authenticated())
+//                .userDetailsService(userDetailsService)
+                .formLogin((form) -> form
+                        .loginProcessingUrl("/login")
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/hello", true)
+                        .failureUrl("/login?error")
+                        .permitAll()
+                ).logout((logout) -> logout
+                        .logoutSuccessUrl("/")
+                )
+//                .httpBasic(Customizer.withDefaults())
+        ;
         return http.build();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService() throws Exception {
-//        PasswordEncoder passwordEncoder = passwordEncoder();
-//        System.out.println(passwordEncoder.encode("general"));
-////        System.out.println(passwordEncoder.encode("admin"));
-//        // ensure the passwords are encoded properly
-//        UserDetails user = User.withUsername("general").password(passwordEncoder.encode("general")).roles("GENERAL").build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
