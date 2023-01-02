@@ -40,7 +40,7 @@ public class UserRegistrationController {
             @ModelAttribute RegistrationFormDto form
     ) {
         log.info("submit : RegistrationFormDto={}", form);
-        userRegistrationService.registerUser(form.getUsername(), form.getPassword());
+        userRegistrationService.saveUser(form.getUsername(), form.getPassword());
         log.info("user registration succeeded");
         return "redirect:/login";
     }

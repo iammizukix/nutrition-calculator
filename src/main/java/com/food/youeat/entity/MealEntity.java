@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "meal")
+@Table(name = "meals")
 @Entity
 @Getter
 @Setter
@@ -23,7 +23,7 @@ public class MealEntity {
 
     @ManyToOne
     @JoinColumn(name = "food_id")
-    private FoodMasterEntity food;
+    private FoodEntity food;
 
     @Column(name = "gram", nullable = false)
     private int gram;

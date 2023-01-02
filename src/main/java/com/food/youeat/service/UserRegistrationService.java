@@ -19,7 +19,7 @@ public class UserRegistrationService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void registerUser(String name, String password) {
+    public void saveUser(String name, String password) {
         log.info("registerUser: name={}, password={}", name, password);
         UserEntity user = new UserEntity();
         user.setName(name);

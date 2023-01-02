@@ -7,20 +7,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Optional;
 
-@Table(name = "category_master")
+@Table(name = "categories")
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryMasterEntity {
+public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "name", length = 10, nullable = false)
     private String name;
     @OneToMany(mappedBy = "category")
-    private List<FoodMasterEntity> foodList;
+    private List<FoodEntity> foodList;
 }
