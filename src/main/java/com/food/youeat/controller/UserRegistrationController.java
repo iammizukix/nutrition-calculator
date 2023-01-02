@@ -37,7 +37,6 @@ public class UserRegistrationController {
 
     @PostMapping("/submit")
     public String submit(
-//            Model model,
             @ModelAttribute RegistrationFormDto form
     ) {
         log.info("submit : RegistrationFormDto={}", form);
