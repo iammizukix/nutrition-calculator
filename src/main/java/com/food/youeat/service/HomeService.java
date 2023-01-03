@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -30,10 +31,6 @@ public class HomeService {
     private UserRepository userRepository;
     @Autowired
     private FoodRepository foodRepository;
-
-    public List<FoodEntity> getAllFood() {
-        return foodRepository.findAll();
-    }
 
     @Transactional
     public void saveMeal(MealFormDto form, String username) {

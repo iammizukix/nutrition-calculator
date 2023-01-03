@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/hello.css" th:href="@{/css/hello.css}">
+    <link rel="stylesheet" href="../static/css/home.css" th:href="@{/css/home.css}">
+    <!--    <script type="text/javascript" th:inline="javascript">-->
+    <!--        var foodArray = ;-->
+
+
+    <!--    </script>-->
 </head>
 <body>
 <header class="p-3 mb-3 border-bottom">
@@ -88,36 +93,44 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" th:action="@{/home/input}" name="recordForm">
+                <form method="post" th:action="@{/home/input}" name="mealForm">
                     <div class="mb-3">
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category" id="category"
-                                aria-describedby="categoryHelp">
-                            <option value="0" selected>Others</option>
-                            <option value="1" onclick="filter(1);">Meat</option>
-                            <option value="2" onclick="filter(2);">Fish</option>
-                            <option value="3" onclick="filter(3);">Vegetable</option>
-                            <option value="4" onclick="filter(4);">Fruit</option>
+                                aria-describedby="categoryHelp" onchange="filter(this.value)">
+                            <option value="0" selected>All</option>
+                            <option value="1">Meat</option>
+                            <option value="2">Fish</option>
+                            <option value="3">Vegetable</option>
+                            <option value="4">Fruit</option>
+                            <option value="5">Diary products</option>
+                            <option value="6">Drink</option>
+                            <option value="9">Others</option>
                         </select>
                         <div id="categoryHelp" class="form-text">Please select the category of food.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" id="name" aria-describedby="nameHelp"
-                               name="foodName">
-                        <div id="nameHelp" class="form-text">Please input the name of food.</div>
+                        <label for="food" class="form-label">Name</label>
+                        <select class="form-select" aria-label="Default select example" name="food" id="food"
+                                aria-describedby="foodHelp">
+                            <option th:each="food: ${foodList}" th:value="${food.id}" th:text="${food.name}"
+                                    th:field="${form.foodId}">
+                                選択できる食べ物がこのカテゴリーにありません。
+                            </option>
+                        </select>
+                        <div id="foodHelp" class="form-text">Please select or input your food.</div>
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantity</label>
                         <input type="text" class="form-control" id="quantity" name="quantity"
-                               aria-describedby="quantityHelp">
+                               aria-describedby="quantityHelp" th:field="${form.quantity}">
                         <div id="quantityHelp" class="form-text">Please input the quantity of food.</div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="recordForm.submit();">Save</button>
+                <button type="button" class="btn btn-primary" onclick="mealForm.submit();">Save</button>
             </div>
         </div>
     </div>
@@ -132,6 +145,7 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="../static/js/graph" th:src="@{/js/graph.js}"></script>
+<script src="../static/js/graph" th:src="@{/js/graph.js}" type="text/javascript"></script>
+<script src="../static/js/home" th:src="@{/js/home.js}" type="text/javascript"></script>
 </body>
 </html>
