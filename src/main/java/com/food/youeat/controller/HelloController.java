@@ -15,7 +15,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello() {
-        log.info("Hello success");
+        log.info("hello");
         return "hello";
     }
 

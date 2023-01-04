@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Table(name = "meals")
 @Entity
 @Getter
@@ -27,4 +29,9 @@ public class MealEntity {
 
     @Column(name = "gram", nullable = false)
     private int gram;
+
+    //String or Date?
+    // date time user had food
+    @Column(name = "date_time", nullable = false)
+    private Date dateTime;
 }

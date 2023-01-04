@@ -1,7 +1,6 @@
 package com.food.youeat.controller;
 
 import com.food.youeat.entity.FoodEntity;
-import com.food.youeat.repository.FoodRepository;
 import com.food.youeat.service.FoodApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,22 +14,25 @@ import java.util.List;
 
 @Controller
 @Slf4j
+@RequestMapping("/api")
 public class FoodApiController {
 
     @Autowired
     FoodApiService foodApiService;
 
-    @GetMapping("/api/food")
+    @GetMapping("/food")
     @ResponseBody
     public List<FoodEntity> getAllFood() {
+        log.info("getAllFood");
         return foodApiService.getAllFood();
     }
 
-    @GetMapping("/api/food/{categoryId}")
+    @GetMapping("/food/{categoryId}")
     @ResponseBody
     public List<FoodEntity> getAllFoodByCategoryId(
             @PathVariable int categoryId
     ) {
+        log.info("getAllFoodByCategoryId: categoryId={}", categoryId);
         return foodApiService.getFoodByCategoryId(categoryId);
     }
 
