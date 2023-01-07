@@ -106,11 +106,7 @@
                     <div class="mb-3">
                         <label for="food" class="form-label">Name</label>
                         <select class="form-select" aria-label="Default select example" name="food" id="food"
-                                aria-describedby="foodHelp">
-                            <option th:each="food: ${foodList}" th:value="${food.id}" th:text="${food.name}"
-                                    th:field="${form.foodId}">
-                                There are no food in this category.
-                            </option>
+                                aria-describedby="foodHelp" th:field="${form.foodId}">
                         </select>
                         <div id="foodHelp" class="form-text">Please select or input your food.</div>
                     </div>

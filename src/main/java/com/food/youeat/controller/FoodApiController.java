@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @Slf4j
@@ -20,19 +21,15 @@ public class FoodApiController {
     @Autowired
     FoodApiService foodApiService;
 
-    @GetMapping("/food")
+    @GetMapping({"/food", "/food/{categoryId}"})
     @ResponseBody
-    public List<FoodEntity> getAllFood() {
-        log.info("getAllFood");
-        return foodApiService.getAllFood();
-    }
-
-    @GetMapping("/food/{categoryId}")
-    @ResponseBody
-    public List<FoodEntity> getAllFoodByCategoryId(
-            @PathVariable int categoryId
+    public List<FoodEntity> getFoodByCategoryId(
+            @PathVariable(required = false) Integer categoryId
     ) {
         log.info("getAllFoodByCategoryId: categoryId={}", categoryId);
+        if (Objects.isNull(categoryId)) {
+            return foodApiService.getAllFood();
+        }
         return foodApiService.getFoodByCategoryId(categoryId);
     }
 

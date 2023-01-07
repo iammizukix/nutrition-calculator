@@ -24,7 +24,7 @@ public class FoodApiService {
         return foodRepository.findAll();
     }
 
-    public List<FoodEntity> getFoodByCategoryId(int categoryId) {
+    public List<FoodEntity> getFoodByCategoryId(Integer categoryId) {
         CategoryEntity category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new DataNotFoundException("category not found. categoryId=" + categoryId));
         return Optional.of(foodRepository.findByCategory(category))

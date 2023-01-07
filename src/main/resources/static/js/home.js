@@ -1,56 +1,30 @@
+$('#modalTriggerBtn').on('click', function(){ filter(0); });
+
 function filter(categoryId){
     var url = '/api/food';
     if(categoryId != 0){
         url += '/' + categoryId;
     }
-    location.href = url;
-//            var food = {
-//                [
-//                {
-//                "id": "1", /*[[${}]]*/
-//                "category":
-//                    {
-//                    "id": "1",
-//                    "name": "肉",
-//                    }
-//                "name": "牛肉"
-//                },...
-//                ]
-//            };
-    var food = [];
+    clear('#food');
     $.ajax({
+        url: url,
         type: 'GET',
-        url: 'api/food', // must be fixing
-        dataType: 'json'
-        }).then(
-            function(json){
-                for(var i = 0; i < json.length; i++){
-                    food.push({
-                        'id': json[i].id,
-                        'category': json[i].category,
-                        'name': json[i].name
-                    });
-                }
-            }
-        );
+        dataType: 'json',
+        success : function(food){ appendFood(food); },
+        error : function(){ appendError(); }
+    });
 }
 
-// Get filtered food list from json
-//$(function(){
-//    var food = [];
-//    $.ajax({
-//        type: 'GET',
-//        url: 'api/food', // must be fixing
-//        dataType: 'json'
-//        }).then(
-//            function(json){
-//                for(var i = 0; i < json.length; i++){
-//                    food.push({
-//                        'id': json[i].id,
-//                        'category': json[i].category,
-//                        'name': json[i].name
-//                    });
-//                }
-//            }
-//        );
-//});
+function appendFood(json) {
+    for(var i = 0; i < json.length; i++){
+        $('#food').append('<option value="' + json[i].id + '">' + json[i].name + '</option>');
+    }
+}
+
+function appendError(){
+    $('#food').append('<option selected>There are no food in this category.</option>');
+}
+
+function clear(element){
+    $(element).text('');
+}
