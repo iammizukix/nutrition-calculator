@@ -27,7 +27,6 @@ public class HomeController {
             Model model
     ) {
         log.info("index");
-//        model.addAttribute("foodList", homeService.getAllFood());
         model.addAttribute("categories", homeService.getAllCategories());
         model.addAttribute("form", new MealFormDto());
         return "home";

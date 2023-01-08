@@ -57,7 +57,7 @@
         <dd class="col-sm-6">Password</dd>
         <dd class="col-sm-6" th:text="${form.password}">password</dd>
     </dl>
-    <form method="post" action="/registration/submit.html" th:action="@{/registration/submit}" th:object="${form}">
+    <form method="post" th:action="@{/registration/submit}" th:object="${form}">
         <input type="hidden" th:field="*{username}">
         <input type="hidden" th:field="*{password}">
         <button type="submit" class="btn btn-primary">Sign up</button>
