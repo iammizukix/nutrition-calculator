@@ -39,7 +39,7 @@ public class HomeController {
     ) {
         log.info("input: User={}, MealFormDto={}", user, form);
         homeService.saveMeal(form, user.getUsername());
-        return null;
+        return "redirect:/home/index";
     }
 
 }

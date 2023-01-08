@@ -116,6 +116,12 @@
                                aria-describedby="quantityHelp" th:field="${form.quantity}">
                         <div id="quantityHelp" class="form-text">Please input the quantity of food.</div>
                     </div>
+                    <div class="mb-3">
+                        <label for="time" class="form-label">Date and time</label>
+                        <input type="text" class="form-control" id="time" name="ateAt"
+                               aria-describedby="quantityHelp" th:field="${form.ateAt}">
+                        <div id="timeHelp" class="form-text">Please input when you ate its food.</div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">

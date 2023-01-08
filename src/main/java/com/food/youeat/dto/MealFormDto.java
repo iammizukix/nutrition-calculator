@@ -12,4 +12,6 @@ public class MealFormDto {
     Integer foodId;
     @NonNull
     Integer quantity;
+    @NonNull
+    String ateAt;
 }
