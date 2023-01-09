@@ -10,13 +10,13 @@ import com.food.youeat.repository.CategoryRepository;
 import com.food.youeat.repository.FoodRepository;
 import com.food.youeat.repository.MealRepository;
 import com.food.youeat.repository.UserRepository;
+import com.food.youeat.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,9 +46,8 @@ public class HomeService {
         meal.setUser(user);
         meal.setFood(food);
         meal.setGram(form.getQuantity());
-        meal.setDateTime(new Date());
+        meal.setHadAt(DateUtils.toLocalDate(form.getDate()));
+        meal.setHadOn(DateUtils.toLocalTime(form.getTime() + ":00"));
         mealRepository.save(meal);
     }
-
-
 }

@@ -117,10 +117,14 @@
                         <div id="quantityHelp" class="form-text">Please input the quantity of food.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="time" class="form-label">Date and time</label>
-                        <input type="text" class="form-control" id="time" name="ateAt"
-                               aria-describedby="quantityHelp" th:field="${form.ateAt}">
-                        <div id="timeHelp" class="form-text">Please input when you ate its food.</div>
+                        <label for="date" class="form-label">Date and time</label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" id="date" name="date"
+                                   aria-describedby="dateHelp" th:field="${form.date}">
+                            <input type="time" class="form-control" id="time" name="time"
+                                   aria-describedby="dateHelp" th:field="${form.time}">
+                        </div>
+                        <div id="dateHelp" class="form-text">Please input when you have its food.</div>
                     </div>
                 </form>
             </div>

@@ -22,7 +22,7 @@ function appendFood(json) {
 }
 
 function appendError(){
-    $('#food').append('<option selected>There are no food in this category.</option>');
+    $('#food').append('<option selected>Connection failed.try again.</option>');
 }
 
 function clear(element){

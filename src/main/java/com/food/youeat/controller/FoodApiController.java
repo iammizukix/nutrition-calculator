@@ -33,5 +33,11 @@ public class FoodApiController {
         return foodApiService.getFoodByCategoryId(categoryId);
     }
 
+    @GetMapping("/calories")
+    @ResponseBody
+    public List<Integer> getDailyCalories() {
+        return foodApiService.getDailyCalories();
+    }
+
 
 }

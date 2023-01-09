@@ -8,5 +8,5 @@ INSERT INTO `youeat`.`categories` (`id`,`name`) VALUES (6,'飲み物');
 INSERT INTO `youeat`.`categories` (`id`,`name`) VALUES (9,'その他');
 
 -- food
-INSERT INTO `youeat`.`food` (`id`,`name`,`category_id`) VALUES (1,'牛肉',1);
-INSERT INTO `youeat`.`food` (`id`,`name`,`category_id`) VALUES (2,'マグロ',2);
+INSERT INTO `youeat`.`food` (`id`,`name`,`category_id`,`calories_per_gram`) VALUES (1,'牛肉',1,100);
+INSERT INTO `youeat`.`food` (`id`,`name`,`category_id`,`calories_per_gram`) VALUES (2,'マグロ',2,200);

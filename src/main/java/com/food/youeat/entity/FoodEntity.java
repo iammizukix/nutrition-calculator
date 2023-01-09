@@ -25,6 +25,8 @@ public class FoodEntity {
     private CategoryEntity category;
     @Column(name = "name", length = 20, nullable = false)
     private String name;
+    @Column(name = "calories_per_gram", nullable = false)
+    private int calories;
     @JsonIgnore
     @OneToMany(mappedBy = "food")
     private List<MealEntity> mealList;

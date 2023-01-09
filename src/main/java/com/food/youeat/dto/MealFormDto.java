@@ -13,5 +13,7 @@ public class MealFormDto {
     @NonNull
     Integer quantity;
     @NonNull
-    String ateAt;
+    String date;
+    @NonNull
+    String time;
 }

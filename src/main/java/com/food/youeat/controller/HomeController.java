@@ -1,11 +1,11 @@
 package com.food.youeat.controller;
 
 import com.food.youeat.dto.MealFormDto;
+import com.food.youeat.entity.UserDetailsImpl;
 import com.food.youeat.service.HomeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -34,7 +34,7 @@ public class HomeController {
 
     @PostMapping("/input")
     public String input(
-            @AuthenticationPrincipal User user,
+            @AuthenticationPrincipal UserDetailsImpl user,
             @ModelAttribute MealFormDto form
     ) {
         log.info("input: User={}, MealFormDto={}", user, form);
