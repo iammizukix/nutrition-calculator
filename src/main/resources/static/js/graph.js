@@ -1,18 +1,24 @@
  window.addEventListener('DOMContentLoaded', function() {
-      $.ajax({
-          url: '/api/calories',
-          type: 'GET',
-          dataType: 'json',
-          success : function(json){ displayGraph(json); }
-      });
+    if(message){ showToast(); }
+    callCalorieApi();
 })
-
+function callCalorieApi(){
+  $.ajax({
+      url: '/api/calories',
+      type: 'GET',
+      dataType: 'json',
+      success : function(json){
+          displayDailyCalories(json[6]);
+          displayGraph(json);
+      }
+  });
+}
 function displayGraph(data){
     const ctx = document.getElementById('graph');
     const config = {
        type: 'bar',
        data: {
-         labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+         labels: ['6 days ago', '5 days ago', '4 days ago', '3 days ago', '2 days ago', 'yesterday', 'Today'],
          datasets: [{
            label: '# of Calories',
            data: data,
@@ -27,17 +33,14 @@ function displayGraph(data){
            },
            title: {
              display: true,
-             text: 'Daily Calories'
+             text: 'Daily calories for the week'
            }
          }
        },
      };
      new Chart(ctx, config);
 }
-function parseToArray(json){
-    var array = [];
-    for(var i = 0; i < json.length; i++){
-        array.push(json[i]);
-    }
-    return array;
+
+function displayDailyCalories(calories){
+     $('#dailyCalories').append(calories);
 }

@@ -28,3 +28,15 @@ function appendError(){
 function clear(element){
     $(element).text('');
 }
+
+// toast function
+var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+var toastList = toastElList.map(function (toastEl) {
+    return new bootstrap.Toast(toastEl, {
+        // Option
+        delay: 10000,
+    });
+});
+function showToast(){
+    toastList[0].show();
+}

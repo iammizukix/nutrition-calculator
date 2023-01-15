@@ -12,11 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
@@ -38,22 +36,20 @@ public class FoodApiService {
     public List<FoodEntity> getFoodByCategoryId(Integer categoryId) {
         CategoryEntity category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new DataNotFoundException("category not found. categoryId=" + categoryId));
-        return Optional.of(foodRepository.findByCategory(category))
-                .orElseThrow(() -> new DataNotFoundException("food not found. category=" + category.toString()));
+        return category.getFoodList();
     }
 
     public List<Integer> getDailyCalories() {
-        LocalDate today = LocalDate.now();
+        LocalDate end = LocalDate.now();
+        LocalDate start = end.minusDays(6);
 
-        LocalDate sunday = today.minusWeeks(1).with(DayOfWeek.SUNDAY);
-        LocalDate saturday = today.with(DayOfWeek.SATURDAY);
-        log.info("getDailyCalories: from={}, to={}", sunday, saturday);
+        log.info("getDailyCalories: from={}, to={}", start, end);
 
-        List<MealEntity> meals = mealRepository.findByHadAtBetween(sunday, saturday);
+        List<MealEntity> meals = mealRepository.findByHadAtBetween(start, end);
 
         List<Integer> dailyCalories = new ArrayList<>();
-        while (!sunday.isAfter(saturday)) {
-            LocalDate targetDate = sunday;
+        while (!start.isAfter(end)) {
+            LocalDate targetDate = start;
             AtomicInteger total = new AtomicInteger();
             meals.stream()
                     .filter(m -> m.getHadAt().isEqual(targetDate))
@@ -62,7 +58,7 @@ public class FoodApiService {
                             m.getFood().getCalories() * m.getGram()
                     ));
             dailyCalories.add(total.get());
-            sunday = sunday.plusDays(1);
+            start = start.plusDays(1);
         }
         return dailyCalories;
     }

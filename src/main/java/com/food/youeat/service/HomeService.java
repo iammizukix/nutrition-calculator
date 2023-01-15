@@ -50,4 +50,12 @@ public class HomeService {
         meal.setHadOn(DateUtils.toLocalTime(form.getTime() + ":00"));
         mealRepository.save(meal);
     }
+
+    public List<MealEntity> getMealsByUsername(String username) {
+        log.info("getMealsByUsername: username={}", username);
+        return userRepository.findByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("user not found. username=" + username))
+                .getMealList();
+    }
+
 }
