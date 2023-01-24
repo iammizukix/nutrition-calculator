@@ -13,12 +13,12 @@ public enum UserStatusEnum {
     ACTIVE(1, "active"),
     Forbidden(9, "forbidden");
 
-    private final int id;
+    private final Integer id;
     private final String status;
 
-    public UserStatusEnum getById(int id) {
+    public UserStatusEnum getById(Integer id) {
         return Arrays.stream(UserStatusEnum.values())
-                .filter(list -> list.getId() == id)
+                .filter(list -> list.getId().equals(id))
                 .findFirst()
                 .orElse(Forbidden);
     }

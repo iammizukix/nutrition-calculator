@@ -23,8 +23,8 @@ public class HomeController {
     @Autowired
     HomeService homeService;
 
-    @GetMapping("/index")
-    public String index(
+    @GetMapping
+    public String home(
             Model model,
             @ModelAttribute("message") String message
     ) {
@@ -46,15 +46,4 @@ public class HomeController {
         redirectAttributes.addAttribute("message", "Saving has succeeded.");
         return "redirect:/home/index";
     }
-
-    @GetMapping("/history")
-    public String history(
-            Model model,
-            @AuthenticationPrincipal UserDetailsImpl user
-    ) {
-        log.info("history");
-        model.addAttribute("meals", homeService.getMealsByUsername(user.getUsername()));
-        return "history";
-    }
-
 }

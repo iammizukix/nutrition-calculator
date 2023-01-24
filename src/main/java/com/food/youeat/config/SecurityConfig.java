@@ -25,17 +25,15 @@ public class SecurityConfig {
                         .requestMatchers("/general").hasRole("GENERAL")
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .anyRequest().authenticated())
-//                .userDetailsService(userDetailsService)
                 .formLogin((form) -> form
                         .loginProcessingUrl("/login")
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home/index", true)
+                        .defaultSuccessUrl("/home", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 ).logout((logout) -> logout
                         .logoutSuccessUrl("/")
                 )
-//                .httpBasic(Customizer.withDefaults())
         ;
         return http.build();
     }

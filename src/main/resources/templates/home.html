@@ -37,7 +37,7 @@
                 <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
                     <li><a class="dropdown-item" href="#">Profile</a></li>
                     <li><a class="dropdown-item" href="#">Settings</a></li>
-                    <li><a class="dropdown-item" th:href="@{/home/history}">History</a></li>
+                    <li><a class="dropdown-item" th:href="@{/history}">History</a></li>
                     <li>
                         <hr class="dropdown-divider">
                     </li>
@@ -96,7 +96,7 @@
                         <label for="category" class="form-label">Category</label>
                         <select class="form-select" aria-label="Default select example" name="category" id="category"
                                 aria-describedby="categoryHelp" onchange="filter(this.value)">
-                            <option value="0" selected>All</option>
+                            <option value="" selected>All</option>
                             <option th:each="category: ${categories}" th:value="${category.id}"
                                     th:text="${category.name}">Meat
                             </option>

@@ -26,7 +26,7 @@ public class MealEntity {
     @JoinColumn(name = "food_id")
     private FoodEntity food;
     @Column(name = "gram", nullable = false)
-    private int gram;
+    private Integer gram;
     @Column(name = "had_at", nullable = false)
     private LocalDate hadAt;
     @Column(name = "had_on", nullable = false)

@@ -17,7 +17,7 @@ import java.util.List;
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     @Column(name = "name", length = 10, nullable = false)
     private String name;
     @OneToMany(mappedBy = "category")

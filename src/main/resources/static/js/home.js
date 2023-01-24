@@ -2,7 +2,7 @@ $('#modalTriggerBtn').on('click', function(){ filter(0); });
 
 function filter(categoryId){
     var url = '/api/food';
-    if(categoryId != 0){
+    if(categoryId){
         url += '/' + categoryId;
     }
     clear('#food');
