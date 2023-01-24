@@ -1,6 +1,9 @@
-$(document).ready(){
+ window.addEventListener('DOMContentLoaded', function() {
+    if(categoryId){
+        document.getElementById("category").options[categoryId].selected = true;
+    }
+})
 
-}
 $('#search').on('click', function(){
     let url = '/history/search';
     let params = [];

@@ -26,7 +26,7 @@ public class FoodApiController {
     public List<FoodEntity> getFoodByCategoryId(
             @PathVariable(required = false) Integer categoryId
     ) {
-        log.info("getAllFoodByCategoryId: categoryId={}", categoryId);
+        log.info("getFoodByCategoryId: categoryId={}", categoryId);
         if (Objects.isNull(categoryId)) {
             return foodApiService.getAllFood();
         }
