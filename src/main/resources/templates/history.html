@@ -163,8 +163,8 @@
                         <div id="categoryHelp" class="form-text">Please select the category of food.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="_food" class="form-label">Name</label>
-                        <select class="form-select" aria-label="Default select example" name="food" id="_food"
+                        <label for="food" class="form-label">Name</label>
+                        <select class="form-select" aria-label="Default select example" name="food" id="food"
                                 aria-describedby="foodHelp" th:field="${form.foodId}">
                         </select>
                         <div id="foodHelp" class="form-text">Please select or input your food.</div>
@@ -204,6 +204,7 @@
 <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../static/js/common" th:src="@{/js/common.js}" type="text/javascript"></script>
 <script src="../static/js/history" th:src="@{/js/history.js}" type="text/javascript"></script>
 </body>
 </html>

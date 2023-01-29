@@ -10,8 +10,10 @@ $('.trigger').on('click', function(){
           type: 'GET',
           dataType: 'json',
           success : function(meal){
-            $('#_category').val(meal.categoryId) = true;
-            $('#_food').val(meal.foodName);
+            const categoryId = meal.categoryId;
+            filter(categoryId);
+            $('#_category').val(categoryId);
+            $('#food').val(meal.foodId);
             $('#_quantity').val(meal.quantity);
             $('#_date').val(meal.date);
             $('#_time').val(meal.time);

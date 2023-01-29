@@ -66,7 +66,7 @@ public class FoodApiService {
                 .orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
         return new MealApiDto(
                 meal.getFood().getCategory().getId(),
-                meal.getFood().getName(),
+                meal.getFood().getId(),
                 meal.getGram(),
                 meal.getHadAt(),
                 meal.getHadOn()
