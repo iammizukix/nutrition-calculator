@@ -1,6 +1,7 @@
 package com.food.youeat.controller;
 
 import com.food.youeat.dto.HistorySearchConditionDto;
+import com.food.youeat.dto.MealFormDto;
 import com.food.youeat.entity.MealEntity;
 import com.food.youeat.entity.UserDetailsImpl;
 import com.food.youeat.service.HistoryService;
@@ -9,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +31,7 @@ public class HistoryController {
         model.addAttribute("categories", historyService.getAllCategories());
         model.addAttribute("meals", historyService.getMealsByUsername(user.getUsername()));
         model.addAttribute("condition", new HistorySearchConditionDto());
+        model.addAttribute("form", new MealFormDto());
         return "history";
     }
 
@@ -46,5 +47,24 @@ public class HistoryController {
         model.addAttribute("meals", meals);
         model.addAttribute("condition", condition);
         return "history";
+    }
+
+    @PostMapping("/edit")
+    public String edit(
+            @RequestParam("mealId") Long mealId,
+            @ModelAttribute MealFormDto form
+    ) {
+        log.info("edit: MealFormDto={}", form);
+        historyService.updateMeal(mealId, form);
+        return "redirect:/history";
+    }
+
+    @PostMapping("/delete")
+    public String delete(
+            @RequestParam("mealId") Long mealId
+    ) {
+        log.info("delete: mealId={}", mealId);
+        historyService.deleteMealByMealId(mealId);
+        return "redirect:/history";
     }
 }

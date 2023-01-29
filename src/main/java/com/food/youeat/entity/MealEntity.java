@@ -1,5 +1,6 @@
 package com.food.youeat.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,9 +20,11 @@ public class MealEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "food_id")
     private FoodEntity food;

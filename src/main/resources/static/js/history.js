@@ -3,6 +3,21 @@
         document.getElementById("category").options[categoryId].selected = true;
     }
 })
+$('.trigger').on('click', function(){
+    const url = '/api/meal/' + $(this).val();
+    $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'json',
+          success : function(meal){
+            $('#_category').val(meal.categoryId) = true;
+            $('#_food').val(meal.foodName);
+            $('#_quantity').val(meal.quantity);
+            $('#_date').val(meal.date);
+            $('#_time').val(meal.time);
+          }
+      });
+})
 
 $('#search').on('click', function(){
     let url = '/history/search';

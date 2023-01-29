@@ -1,10 +1,10 @@
 package com.food.youeat.service;
 
+import com.food.youeat.dto.MealApiDto;
 import com.food.youeat.entity.CategoryEntity;
 import com.food.youeat.entity.FoodEntity;
 import com.food.youeat.entity.MealEntity;
 import com.food.youeat.exception.DataNotFoundException;
-import com.food.youeat.repository.CalorieRepository;
 import com.food.youeat.repository.CategoryRepository;
 import com.food.youeat.repository.FoodRepository;
 import com.food.youeat.repository.MealRepository;
@@ -21,13 +21,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Slf4j
 public class FoodApiService {
     @Autowired
-    private CategoryRepository categoryRepository;
+    CategoryRepository categoryRepository;
     @Autowired
-    private FoodRepository foodRepository;
+    FoodRepository foodRepository;
     @Autowired
-    private CalorieRepository calorieRepository;
-    @Autowired
-    private MealRepository mealRepository;
+    MealRepository mealRepository;
 
     public List<FoodEntity> getAllFood() {
         return foodRepository.findAll();
@@ -61,5 +59,17 @@ public class FoodApiService {
             start = start.plusDays(1);
         }
         return dailyCalories;
+    }
+
+    public MealApiDto getMealByMealId(Long mealId) {
+        MealEntity meal = mealRepository.findById(mealId)
+                .orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
+        return new MealApiDto(
+                meal.getFood().getCategory().getId(),
+                meal.getFood().getName(),
+                meal.getGram(),
+                meal.getHadAt(),
+                meal.getHadOn()
+        );
     }
 }

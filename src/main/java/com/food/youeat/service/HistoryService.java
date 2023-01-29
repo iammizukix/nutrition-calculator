@@ -1,14 +1,21 @@
 package com.food.youeat.service;
 
 import com.food.youeat.dto.HistorySearchConditionDto;
+import com.food.youeat.dto.MealFormDto;
 import com.food.youeat.entity.CategoryEntity;
+import com.food.youeat.entity.FoodEntity;
 import com.food.youeat.entity.MealEntity;
+import com.food.youeat.exception.DataNotFoundException;
 import com.food.youeat.repository.CategoryRepository;
+import com.food.youeat.repository.FoodRepository;
+import com.food.youeat.repository.MealRepository;
 import com.food.youeat.repository.UserRepository;
+import com.food.youeat.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,9 +26,13 @@ import java.util.stream.Stream;
 @Slf4j
 public class HistoryService {
     @Autowired
+    FoodRepository foodRepository;
+    @Autowired
     UserRepository userRepository;
     @Autowired
     CategoryRepository categoryRepository;
+    @Autowired
+    MealRepository mealRepository;
 
     public List<CategoryEntity> getAllCategories() {
         return categoryRepository.findAll();
@@ -57,4 +68,22 @@ public class HistoryService {
         return mealsStream.toList();
     }
 
+    @Transactional
+    public void deleteMealByMealId(Long mealId) {
+        log.info("deleteMealByMealId: mealId={}", mealId);
+        MealEntity meal = mealRepository.findById(mealId).orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
+        mealRepository.delete(meal);
+    }
+
+    @Transactional
+    public void updateMeal(Long mealId, MealFormDto form) {
+        log.info("deleteMealByMealId: MealFormDto={}", form);
+        MealEntity meal = mealRepository.findById(mealId).orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
+        FoodEntity food = foodRepository.findById(form.getFoodId()).orElseThrow(() -> new DataNotFoundException("Food not found. foodId=" + form.getFoodId()));
+        meal.setFood(food);
+        meal.setGram(form.getQuantity());
+        meal.setHadAt(DateUtils.toLocalDate(form.getDate()));
+        meal.setHadOn(DateUtils.toLocalTime(form.getTime()));
+        mealRepository.save(meal);
+    }
 }

@@ -1,5 +1,6 @@
 package com.food.youeat.controller;
 
+import com.food.youeat.dto.MealApiDto;
 import com.food.youeat.entity.FoodEntity;
 import com.food.youeat.service.FoodApiService;
 import lombok.extern.slf4j.Slf4j;
@@ -39,5 +40,12 @@ public class FoodApiController {
         return foodApiService.getDailyCalories();
     }
 
+    @GetMapping("/meal/{mealId}")
+    @ResponseBody
+    public MealApiDto getMealByMealId(
+            @PathVariable Long mealId
+    ) {
+        return foodApiService.getMealByMealId(mealId);
+    }
 
 }
