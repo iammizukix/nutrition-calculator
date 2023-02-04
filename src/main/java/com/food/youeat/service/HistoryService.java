@@ -69,21 +69,21 @@ public class HistoryService {
     }
 
     @Transactional
-    public void deleteMealByMealId(Long mealId) {
-        log.info("deleteMealByMealId: mealId={}", mealId);
-        MealEntity meal = mealRepository.findById(mealId).orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
-        mealRepository.delete(meal);
-    }
-
-    @Transactional
-    public void updateMeal(Long mealId, MealFormDto form) {
+    public void updateMeal(MealFormDto form) {
         log.info("deleteMealByMealId: MealFormDto={}", form);
-        MealEntity meal = mealRepository.findById(mealId).orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
+        MealEntity meal = mealRepository.findById(form.getMealId()).orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + form.getMealId()));
         FoodEntity food = foodRepository.findById(form.getFoodId()).orElseThrow(() -> new DataNotFoundException("Food not found. foodId=" + form.getFoodId()));
         meal.setFood(food);
         meal.setGram(form.getQuantity());
         meal.setHadAt(DateUtils.toLocalDate(form.getDate()));
         meal.setHadOn(DateUtils.toLocalTime(form.getTime()));
         mealRepository.save(meal);
+    }
+
+    @Transactional
+    public void deleteMealByMealId(Long mealId) {
+        log.info("deleteMealByMealId: mealId={}", mealId);
+        MealEntity meal = mealRepository.findById(mealId).orElseThrow(() -> new DataNotFoundException("Meal not found. mealId=" + mealId));
+        mealRepository.delete(meal);
     }
 }

@@ -51,18 +51,19 @@
 </header>
 
 <div class="container">
+    <!--    search space   -->
     <div class="row mb-3 g-3 align-items-center justify-content-end" th:object="${condition}">
         <div class="col-auto">
-            <label for="date" class="col-form-label">Date</label>
+            <label for="_date" class="col-form-label">Date</label>
         </div>
         <div class="col-auto">
-            <input type="date" class="form-control" id="date" name="date" th:value="*{date}">
+            <input type="date" class="form-control" id="_date" name="date" th:value="*{date}">
         </div>
         <div class="col-auto">
-            <label for="category" class="col-form-label">Category</label>
+            <label for="_category" class="col-form-label">Category</label>
         </div>
         <div class="col-auto">
-            <select class="form-select" aria-label="Default select example" id="category">
+            <select class="form-select" aria-label="Default select example" id="_category">
                 <option value="" selected>All</option>
                 <option th:each="category: ${categories}" th:value="${category.id}"
                         th:text="${category.name}">Meat
@@ -70,16 +71,16 @@
             </select>
         </div>
         <div class="col-auto">
-            <label for="keyword" class="col-form-label">Keyword</label>
+            <label for="_keyword" class="col-form-label">Keyword</label>
         </div>
         <div class="col-auto">
-            <input type="text" class="form-control" id="keyword" name="keyword" th:value="*{keyword}">
+            <input type="text" class="form-control" id="_keyword" name="keyword" th:value="*{keyword}">
         </div>
         <div class="col-auto">
             <button type="button" class="btn btn-primary" id="search"><i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </div>
-
+    <!--    table   -->
     <table class="table text-center">
         <thead class="table-dark">
         <tr>
@@ -105,7 +106,6 @@
             <td scope="col" th:text="*{gram}">200g</td>
             <td scope="col" th:text="*{gram * food.calories}">1000kcal</td>
             <td scope="col">
-                <form method="post" th:action="@{/history/delete}" name="delete">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-success btn-sm trigger"
                             data-bs-toggle="modal"
@@ -113,14 +113,14 @@
                             th:value="*{id}">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm" onclick="delete.submit();">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="deleteMeal(this.value)" th:value="*{id}">
                         <i class="fa-regular fa-trash-can"></i>
                     </button>
-                </form>
             </td>
         </tr>
         </tbody>
     </table>
+    <!--    paging   -->
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <li class="page-item">
@@ -152,8 +152,8 @@
             <div class="modal-body">
                 <form method="post" th:action="@{/history/edit}" name="mealForm">
                     <div class="mb-3">
-                        <label for="_category" class="form-label">Category</label>
-                        <select class="form-select" aria-label="Default select example" name="category" id="_category"
+                        <label for="category" class="form-label">Category</label>
+                        <select class="form-select" aria-label="Default select example" name="category" id="category"
                                 aria-describedby="categoryHelp" onchange="filter(this.value)">
                             <option value="" selected>All</option>
                             <option th:each="category: ${categories}" th:value="${category.id}"
@@ -170,21 +170,22 @@
                         <div id="foodHelp" class="form-text">Please select or input your food.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="_quantity" class="form-label">Quantity</label>
-                        <input type="text" class="form-control" id="_quantity" name="quantity"
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="text" class="form-control" id="quantity" name="quantity"
                                aria-describedby="quantityHelp" th:field="${form.quantity}">
                         <div id="quantityHelp" class="form-text">Please input the quantity of food.</div>
                     </div>
                     <div class="mb-3">
-                        <label for="_date" class="form-label">Date and time</label>
+                        <label for="date" class="form-label">Date and time</label>
                         <div class="input-group">
-                            <input type="date" class="form-control" id="_date" name="date"
+                            <input type="date" class="form-control" id="date" name="date"
                                    aria-describedby="dateTimeHelp" th:field="${form.date}">
-                            <input type="time" class="form-control" id="_time" name="time"
+                            <input type="time" class="form-control" id="time" name="time"
                                    aria-describedby="dateTimeHelp" th:field="${form.time}">
                         </div>
                         <div id="dateTimeHelp" class="form-text">Please input when you have its food.</div>
                     </div>
+                    <input type="hidden" id="mealId" th:field="${form.mealId}">
                 </form>
             </div>
             <div class="modal-footer">

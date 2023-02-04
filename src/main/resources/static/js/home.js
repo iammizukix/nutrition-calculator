@@ -10,4 +10,3 @@ var toastList = toastElList.map(function (toastEl) {
 });
 function showToast(){
     toastList[0].show();
-}

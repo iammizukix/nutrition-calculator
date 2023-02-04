@@ -51,15 +51,14 @@ public class HistoryController {
 
     @PostMapping("/edit")
     public String edit(
-            @RequestParam("mealId") Long mealId,
             @ModelAttribute MealFormDto form
     ) {
         log.info("edit: MealFormDto={}", form);
-        historyService.updateMeal(mealId, form);
+        historyService.updateMeal(form);
         return "redirect:/history";
     }
 
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public String delete(
             @RequestParam("mealId") Long mealId
     ) {

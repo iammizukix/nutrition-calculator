@@ -4,7 +4,8 @@
     }
 })
 $('.trigger').on('click', function(){
-    const url = '/api/meal/' + $(this).val();
+    const mealId = $(this).val();
+    const url = '/api/meal/' + mealId;
     $.ajax({
           url: url,
           type: 'GET',
@@ -12,11 +13,12 @@ $('.trigger').on('click', function(){
           success : function(meal){
             const categoryId = meal.categoryId;
             filter(categoryId);
-            $('#_category').val(categoryId);
+            $('#category').val(categoryId);
             $('#food').val(meal.foodId);
-            $('#_quantity').val(meal.quantity);
-            $('#_date').val(meal.date);
-            $('#_time').val(meal.time);
+            $('#quantity').val(meal.quantity);
+            $('#date').val(meal.date);
+            $('#time').val(meal.time);
+            $('#mealId').val(mealId);
           }
       });
 })
@@ -25,15 +27,15 @@ $('#search').on('click', function(){
     let url = '/history/search';
     let params = [];
 
-    const date = $('#date').val();
+    const date = $('#_date').val();
     if(date){
         params.push('date=' + date);
     }
-    const categoryId = $('#category').val();
+    const categoryId = $('#_category').val();
     if(categoryId){
         params.push('categoryId=' + categoryId);
     }
-    const keyword = $('#keyword').val();
+    const keyword = $('#_keyword').val();
     if(keyword){
         params.push('keyword=' +  keyword);
     }
@@ -42,3 +44,7 @@ $('#search').on('click', function(){
     }
     location.href = url;
 })
+
+function deleteMeal(mealId){
+    location.href = '/history/delete?mealId=' + mealId;
+}

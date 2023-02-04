@@ -8,6 +8,7 @@ import lombok.NonNull;
 @Data
 @NoArgsConstructor
 public class MealFormDto {
+    Long mealId;
     @NonNull
     Integer foodId;
     @NonNull
