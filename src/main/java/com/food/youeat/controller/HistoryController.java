@@ -7,12 +7,12 @@ import com.food.youeat.entity.UserDetailsImpl;
 import com.food.youeat.service.HistoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @Slf4j
@@ -25,11 +25,14 @@ public class HistoryController {
     @GetMapping
     public String history(
             Model model,
+            Pageable pageable,
             @AuthenticationPrincipal UserDetailsImpl user
     ) {
         log.info("history: user={}", user);
+        Page<MealEntity> mealsPage = historyService.getMealsByUsername(pageable, user.getUsername());
         model.addAttribute("categories", historyService.getAllCategories());
-        model.addAttribute("meals", historyService.getMealsByUsername(user.getUsername()));
+        model.addAttribute("page", mealsPage);
+        model.addAttribute("meals", mealsPage.getContent());
         model.addAttribute("condition", new HistorySearchConditionDto());
         model.addAttribute("form", new MealFormDto());
         return "history";
@@ -39,12 +42,14 @@ public class HistoryController {
     public String search(
             Model model,
             @AuthenticationPrincipal UserDetailsImpl user,
+            Pageable pageable,
             HistorySearchConditionDto condition
     ) {
         log.info("search: user={}, HistorySearchConditionDto={}", user, condition);
         model.addAttribute("categories", historyService.getAllCategories());
-        List<MealEntity> meals = historyService.getMealsBySearchCondition(user.getUsername(), condition);
-        model.addAttribute("meals", meals);
+        Page<MealEntity> mealsPage = historyService.getMealsBySearchCondition(pageable, user.getUsername(), condition);
+        model.addAttribute("page", mealsPage);
+        model.addAttribute("meals", mealsPage.getContent());
         model.addAttribute("condition", condition);
         return "history";
     }

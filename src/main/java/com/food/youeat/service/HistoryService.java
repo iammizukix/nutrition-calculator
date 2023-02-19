@@ -13,6 +13,9 @@ import com.food.youeat.repository.UserRepository;
 import com.food.youeat.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,19 +41,21 @@ public class HistoryService {
         return categoryRepository.findAll();
     }
 
-    public List<MealEntity> getMealsByUsername(String username) {
+    public Page<MealEntity> getMealsByUsername(Pageable pageable, String username) {
         log.info("getMealsByUsername: username={}", username);
-        return userRepository.findByName(username)
+        List<MealEntity> meals = userRepository.findByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found. username=" + username))
                 .getMealList();
+        return paginateList(pageable, meals);
     }
 
-    public List<MealEntity> getMealsBySearchCondition(String username, HistorySearchConditionDto condition) {
+    public Page<MealEntity> getMealsBySearchCondition(Pageable pageable, String username, HistorySearchConditionDto condition) {
         log.info("getMealsBySearchCondition: username={}, condition={}", username, condition);
         List<MealEntity> userMeals = userRepository.findByName(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found. username=" + username))
                 .getMealList();
-        return filtered(userMeals, condition.getDate(), condition.getCategoryId(), condition.getKeyword());
+        userMeals = filtered(userMeals, condition.getDate(), condition.getCategoryId(), condition.getKeyword());
+        return paginateList(pageable, userMeals);
     }
 
     private List<MealEntity> filtered(List<MealEntity> meals, LocalDate date, Integer categoryId, String keyword) {
@@ -66,6 +71,12 @@ public class HistoryService {
             mealsStream = mealsStream.filter(m -> m.getFood().getName().toLowerCase().contains(keyword.toLowerCase()));
         }
         return mealsStream.toList();
+    }
+
+    private <T> Page<T> paginateList(Pageable pageable, List<T> list) {
+        int first = Math.min(Long.valueOf(pageable.getOffset()).intValue(), list.size());
+        int last = Math.min(first + pageable.getPageSize(), list.size());
+        return new PageImpl<>(list.subList(first, last), pageable, list.size());
     }
 
     @Transactional
